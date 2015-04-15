@@ -99,6 +99,14 @@ public class NettyUtils {
     return new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 8, -8, 8);
   }
 
+  /** Returns the local address on the channel or "&lt;local address&gt;" if none exists. */
+  public static String getLocalAddress(Channel channel) {
+    if (channel != null && channel.localAddress() != null) {
+      return channel.localAddress().toString();
+    }
+    return "<unknown local>";
+  }
+
   /** Returns the remote address on the channel or "&lt;remote address&gt;" if none exists. */
   public static String getRemoteAddress(Channel channel) {
     if (channel != null && channel.remoteAddress() != null) {

@@ -63,8 +63,8 @@ public class TransportChannelHandler extends SimpleChannelInboundHandler<Message
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-    logger.warn("Exception in connection from " + NettyUtils.getRemoteAddress(ctx.channel()),
-      cause);
+    logger.warn("Exception in connection from " + NettyUtils.getRemoteAddress(ctx.channel()) +
+            " to " + NettyUtils.getLocalAddress(ctx.channel()), cause);
     requestHandler.exceptionCaught(cause);
     responseHandler.exceptionCaught(cause);
     ctx.close();
