@@ -18,6 +18,7 @@
 package org.apache.spark.network.shuffle;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.concurrent.ExecutorService;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Uninterruptibles;
+import io.netty.util.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +137,7 @@ public class RetryingBlockFetcher {
       myListener = currentListener;
     }
 
+    logger.trace("Block IDs to fetch = " + Arrays.toString(blockIdsToFetch) + ", num of retries = " + numRetries);
     // Now initiate the fetch on all outstanding blocks, possibly initiating a retry if that fails.
     try {
       fetchStarter.createAndStart(blockIdsToFetch, myListener);

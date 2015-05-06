@@ -588,6 +588,7 @@ private[spark] object Utils extends Logging {
       securityMgr: SecurityManager,
       hadoopConf: Configuration) {
     val targetFile = new File(targetDir, filename)
+    logTrace("Trying to fetch file from " + url + " as " + targetFile.getAbsolutePath())
     val uri = new URI(url)
     val fileOverwrite = conf.getBoolean("spark.files.overwrite", defaultValue = false)
     Option(uri.getScheme).getOrElse("file") match {
@@ -814,6 +815,10 @@ private[spark] object Utils extends Logging {
    */
   def localHostName(): String = {
     customHostname.getOrElse(localIpAddressHostname)
+  }
+
+  def publicDnsName(): String = {
+    sys.env.get("SPARK_PUBLIC_DNS").getOrElse(localHostName())
   }
 
   def getAddressHostName(address: String): String = {

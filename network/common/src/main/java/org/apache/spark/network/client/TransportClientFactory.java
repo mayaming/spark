@@ -123,7 +123,12 @@ public class TransportClientFactory implements Closeable {
   public TransportClient createClient(String remoteHost, int remotePort) throws IOException {
     // Get connection from the connection pool first.
     // If it is not found or not active, create a new one.
+
+    logger.trace("Creating new transport client");
+
     final InetSocketAddress address = new InetSocketAddress(remoteHost, remotePort);
+
+    logger.trace("Remote host = " + remoteHost + ", remote port = " + remotePort);
 
     // Create the ClientPool if we don't have it yet.
     ClientPool clientPool = connectionPool.get(address);
